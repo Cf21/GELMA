@@ -37,7 +37,7 @@ LMAparam = [RandSeed,Stages];
 
 %Run the fit multiple times
 
-for i
+for i 
     tic
 
     [paramfull,FitData,Final,DNA,Res,ResGA,L,U] = gelmafit(ExpData,beta0,GAparam, LMAparam);
