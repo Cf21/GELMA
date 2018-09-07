@@ -1,4 +1,4 @@
-function [DNA,rawfit] = EIS_curvefit(f,TraceRs,TraceXs,L,U,fit_thresh,max_gen)
+function [DNA,rawfit] = EIS_curvefit(f,TraceRs,TraceXs,L,U,fit_thresh,max_gen,seed)
 
 %% GA PARAMETERS (can be modified)
 
@@ -40,9 +40,20 @@ lgd.AutoUpdate = 'off';
 % Initialize population
 gen = 0;
 pop = zeros(pop_size,11);
-for i = 1:pop_size
-    for j = 1:11
-        pop(i,j)= (bounds(2,j)-bounds(1,j)).*rand() + bounds(1,j);
+if seed == 0
+    for i = 1:pop_size
+        for j = 1:11
+            pop(i,j)= (bounds(2,j)-bounds(1,j)).*rand() + bounds(1,j);
+        end
+    end
+else
+    pop(1,:) = seed;
+    for k = 2:pop_size 
+        % Mutate seed based on mutation rate
+        child = EIS_mutate(seed,mutn_rate,bounds);
+        
+        % Add to pop
+        pop(k,:) = child;
     end
 end
 

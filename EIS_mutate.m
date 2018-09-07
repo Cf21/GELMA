@@ -8,11 +8,9 @@ for i =1:11
     if rand() <= mut_rate
         dice = randi([0 2],1); % roll 3 sided dice
         if dice == 0
-            child(i) = child(i)*(rand() + 1); % increase parameter by up to 2x
-        elseif dice == 1
-            child(i) = child(i)*(0.5*rand() + 0.5); % decrease parameter by down to 0.5x
-        else
             child(i)= (bounds(2,i)-bounds(1,i))*rand() + bounds(1,i); % randomly select new value within parameter bounds
+        else
+            child(i) = child(i)*normrnd(1,0.2); % increase / decrease based on normal distribution around current value
         end
     end
     

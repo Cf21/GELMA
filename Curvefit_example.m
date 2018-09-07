@@ -15,7 +15,7 @@ beta0 = [10 1e-7  0.5 100 1E-4 0.01  1E-5 0.5   1E02  1E-5    0.5];
 %GA operating params
 fit_thresh = 0.015;
 max_gen = 50000;
-
+seed = 0;
 
 %LMA params
 RandSeed = "N"; %Random seeding, N for no, Y for yes
@@ -35,4 +35,4 @@ ExpData(:,3) = TraceXs;
 GAparam = [fit_thresh, max_gen];
 LMAparam = [RandSeed,Stages];
 
-[paramfull,FitData,Final,DNA,Res,ResGA,L,U] = gelmafit(ExpData,beta0,GAparam, LMAparam);
+[paramfull,FitData,Final,DNA,Res,ResGA,L,U] = gelmafit(ExpData,beta0,GAparam,LMAparam,seed);

@@ -1,4 +1,4 @@
-function [paramfull,FitData,Final,DNA,Res,ResGA,L,U] = gelmafit(ExpData,beta0,GAparam,LMAparam)
+function [paramfull,FitData,Final,DNA,Res,ResGA,L,U] = gelmafit(ExpData,beta0,GAparam,LMAparam,seed)
 %% INPUTS
 % ExpData = [Frequency, Real, Imaginary]
 % beta0 = Initialization function
@@ -20,8 +20,8 @@ TraceXs = ExpData(:,3);
 %1:Rs 2:Qb 3:alpha_b 4:Rb 5:Q_W 6:B 7:Q_h 8:alpha_h 9:R_int 10:Q_a 11:alpha_a
 % L = [beta0(1)*0.5 beta0(2)*1e-2  0   beta0(4)*1e-1 beta0(5)*1e-2 beta0(6)*1e-2 beta0(7)*1e-2  0   beta0(9)*1e-1  beta0(10)*1e-2 0];
 % U = [beta0(1)*5   beta0(2)*1e2   1   beta0(4)*1e1  beta0(5)*1e2  beta0(6)*1e2  beta0(7)*1e2   1   beta0(9)*1e1   beta0(10)*1e2  1];
-L = [15 1E-8 0.8 1E2 1E-5 1E-3 1E-7 0.4 0   1E-7 0.4];
-U = [20 1E-5 1.0 1E3 1E-3 1E01 1E-4 1.0 300 1E-4 1.0];
+L = [15,1e-9,0.8,1e2,1e-5,1e-3,1e-7,0.0,1e2,1e-6,0.0];
+U = [20,1e-6,1.0,1e3,1e-3,1e00,1e-4,1.0,1e5,1e-2,1.0];
 
 %GA operating paramsyou
 % fit_thresh = 0.015;
@@ -38,7 +38,7 @@ Stages = 3; % number of 3-stage iterations
 
 
 %% Phase 1: Genetic Algorithm Fit 
-[DNA,raw_fit] = EIS_curvefit(FrequencyHz,TraceRs,TraceXs,L,U,fit_thresh,max_gen);
+[DNA,raw_fit] = EIS_curvefit(FrequencyHz,TraceRs,TraceXs,L,U,fit_thresh,max_gen,seed);
 
 
 ResGA = 1/raw_fit;
