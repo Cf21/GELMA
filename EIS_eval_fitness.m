@@ -23,9 +23,22 @@ for i = 1:pop_size
     imag_curve = imag(curve);
     
     % Perform simultaneous Chi squared summation for both real and imaginary curves
-    for j = 1:size(curve)
-        fitness(i) = fitness(i) + ((real_data(j)-real_curve(j))^2)/abs(real_curve(j)) + ((imag_data(j)-imag_curve(j))^2)/abs(imag_curve(j));
-    end
+    fitness(i) = sum(((real_data-real_curve).^2)./abs(real_curve)) + sum(((imag_data-imag_curve).^2)./abs(imag_curve));
+    
+%     df = 11;
+%     SS_real = sum((real_data - real_curve).^2);
+%     SS_imag = sum((imag_data - imag_curve).^2);
+%     SS = SS_real + SS_imag;
+%     SE = sqrt(SS/df);
+%     fitness(i) = SE;
+
+%     SS_tot_real = sum((real_data - mean(real_data)).^2);
+%     SS_tot_imag = sum((imag_data - mean(imag_data)).^2);
+%     SS_res_real = sum((real_data - real_curve).^2);
+%     SS_res_imag = sum((imag_data - imag_curve).^2);
+%     R2 = 1 - (SS_res_real+SS_res_imag)/(SS_tot_real+SS_tot_imag);
+%     fitness(i) = R2;
+
 end
 
 % Invert simultaneous Chi squared sum to create maximization problem and raw fitness score
