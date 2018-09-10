@@ -34,7 +34,7 @@ end
 
 %beta0 = param;% [Rs(i),Qb(i),alpha_b(i),R_bulk(i),Qw(i),B(i),Qh(i),alpha_h(i),Rint(i),Qa(i),alpha_a(i)];
 lb = [param(1)*0.8,param(2)*0.1,0,param(4)*0.8,param(5)*0.1,param(6)*0.1,param(7)*0.1,0,param(9),param(10)*0.1,0];
-ub = [param(1)*1.2,param(2)*10,1,param(4)*1.2,param(5)*10,param(6)*10,param(7)*10,1,param(9),param(10)*10,1];
+ub = [param(1)*1.2,param(2)*10,1,param(4)*1.2,param(i)*10,B(i)*10,Qh(i)*10,1,Rint(i),Qa(i)*10,1];
 
 [Final,res] = nlincompfit(TraceRs,TraceXs,FrequencyHz,param,lb,ub);
 
@@ -156,68 +156,68 @@ Res = resb;
     % end
 %%Stage 3 full 11 fit attempt: redistribute all params?
 %%Create new searching space slightly more narrow.
-    % r1 = rand(4,iter2); r1(1)=1;
-    % r2 = rand(1,iter2); r2(1)=1;
-    % rg = rand(11,iter2); rg(:,1)=1;
-    % 
-    % ng = randi([-1 1],11,iter2); ng(:,1)=1;
-    % qn=randi([-1 1],4,iter2); qn(:,1)=0;
-    % bn=randi([-1 1],1,iter2); bn(1)=0;
-    % an=randi([50 100],3,iter2)*0.01; an(:,1)=1;
-    % 
-    % Rs = param(1)*rg(1,:).*(10.^bn);
-    % Qb = param(2)*r1(1,:).*10.^qn(1,:);
-    % alpha_b = param(3)*an(1,:);
-    % R_bulk = param(4)*rg(2,:).*(10.^bn);
-    % Qw = param(5)*r1(2,:).*10.^qn(2,:);
-    % B = param(6)*r2.*10.^bn;
-    % Qh = param(7)*r1(3,:).*10.^qn(3,:);
-    % alpha_h = param(8)*an(2,:);
-    % Rint = param(9)*rg(3,:).*(10.^bn);
-    % Qa = param(10)*r1(4,:).*10.^qn(4,:);
-    % alpha_a = param(11)*an(3,:);
-    % 
-    % check3 = 0;
-    % for i=1:1:iter2
-    % fprintf('\n Iteration %i of %i for full param fit\n',i,iter2)
-    % 
-    % beta0 = [Rs(i),Qb(i),alpha_b(i),R_bulk(i),Qw(i),B(i),Qh(i),alpha_h(i),Rint(i),Qa(i),alpha_a(i)];
-    % lb = [Rs(i)*0.8,Qb(i)*0.1,0,R_bulk(i)*0.8,Qw(i)*0.1,B(i)*0.1,Qh(i)*0.1,0,Rint(i),Qa(i)*0.1,0];
-    % ub = [Rs(i)*1.2,Qb(i)*10,1,R_bulk(i)*1.2,Qw(i)*10,B(i)*10,Qh(i)*10,1,Rint(i),Qa(i)*10,1];
-    % 
-    % [beta1,res] = nlincompfit(TraceRs,TraceXs,FrequencyHz,beta0,lb,ub);
-    % 
-    % if res<resb
-    %     paramfull(count,1:11) = beta1(:);
-    %     paramfull(count,12)=res;
-    %     count=count+1;
-    %     check=1;
-    %     b=beta1;
-    %     resb=res;
-    % end
-    % fprintf('\n Iter %i Complete. \n Best Residual is %f fit\n',i,resb)
-    % 
-    % %end Stage
-    % 
-    % %Update param
-    % if check3==1
-    %     param(1)=b(1);
-    %     param(2)=b(2);
-    %     param(3)=b(3);
-    %     param(4)=b(4);
-    %     param(5)=b(5);
-    %     param(6)=b(6);
-    %     param(7)=b(7);
-    %     param(8)=b(8);
-    %     param(9)=b(9);
-    %     param(10)=b(10);
-    %     param(11)=b(11);
-    % end
-    % 
-    % end
-    % 
-    % 
-    % 
+r1 = rand(4,iter2); r1(1)=1;
+r2 = rand(1,iter2); r2(1)=1;
+rg = rand(11,iter2); rg(:,1)=1;
+
+ng = randi([-1 1],11,iter2); ng(:,1)=1;
+qn=randi([-1 1],4,iter2); qn(:,1)=0;
+bn=randi([-1 1],1,iter2); bn(1)=0;
+an=randi([50 100],3,iter2)*0.01; an(:,1)=1;
+
+Rs = param(1)*rg(1,:).*(10.^bn);
+Qb = param(2)*r1(1,:).*10.^qn(1,:);
+alpha_b = param(3)*an(1,:);
+R_bulk = param(4)*rg(2,:).*(10.^bn);
+Qw = param(5)*r1(2,:).*10.^qn(2,:);
+B = param(6)*r2.*10.^bn;
+Qh = param(7)*r1(3,:).*10.^qn(3,:);
+alpha_h = param(8)*an(2,:);
+Rint = param(9)*rg(3,:).*(10.^bn);
+Qa = param(10)*r1(4,:).*10.^qn(4,:);
+alpha_a = param(11)*an(3,:);
+
+check3 = 0;
+for i=1:1:iter2
+fprintf('\n Iteration %i of %i for full param fit\n',i,iter2)
+
+beta0 = [Rs(i),Qb(i),alpha_b(i),R_bulk(i),Qw(i),B(i),Qh(i),alpha_h(i),Rint(i),Qa(i),alpha_a(i)];
+lb = [Rs(i)*0.8,Qb(i)*0.1,0,R_bulk(i)*0.8,Qw(i)*0.1,B(i)*0.1,Qh(i)*0.1,0,Rint(i),Qa(i)*0.1,0];
+ub = [Rs(i)*1.2,Qb(i)*10,1,R_bulk(i)*1.2,Qw(i)*10,B(i)*10,Qh(i)*10,1,Rint(i),Qa(i)*10,1];
+
+[beta1,res] = nlincompfit(TraceRs,TraceXs,FrequencyHz,beta0,lb,ub);
+
+if res<resb
+    paramfull(count,1:11) = beta1(:);
+    paramfull(count,12)=res;
+    count=count+1;
+    check=1;
+    b=beta1;
+    resb=res;
+end
+fprintf('\n Iter %i Complete. \n Best Residual is %f fit\n',i,resb)
+
+%end Stage
+
+%Update param
+if check3==1
+    param(1)=b(1);
+    param(2)=b(2);
+    param(3)=b(3);
+    param(4)=b(4);
+    param(5)=b(5);
+    param(6)=b(6);
+    param(7)=b(7);
+    param(8)=b(8);
+    param(9)=b(9);
+    param(10)=b(10);
+    param(11)=b(11);
+end
+
+end
+
+
+
 
 
                

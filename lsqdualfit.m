@@ -72,7 +72,7 @@ function [beta,resnorm] = lsqdualfit(x_cell, y_cell, mdl_cell, beta0, lb,ub, var
 		
 
 [beta,resnorm] = lsqcurvefit( mdl_vec,beta0,x_vec, y_vec,lb,ub,optimoptions(@lsqcurvefit,...
-    'MaxFunctionEvaluations',3000,...
-    'MaxIterations',1000,'FunctionTolerance',1e-12));
+    'MaxFunctionEvaluations',30000,...
+    'MaxIterations',30000,'FunctionTolerance',1e-14, 'ScaleProblem', 'jacobian', FiniteDifferenceType, 'central'));
 
 end

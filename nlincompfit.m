@@ -7,8 +7,6 @@ function [beta,resnorm] = nlincompfit(Z_exp_real, Z_exp_imag, fdata, beta0,lb,ub
 %(vectors)
 % 
 %%
-
-
 %Take Experimental data and organize it or lsqdualfit
 x_cell = {fdata, fdata};
 y_cell = {Z_exp_real, Z_exp_imag};
