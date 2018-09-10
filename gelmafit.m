@@ -49,6 +49,10 @@ ResGA = 1/raw_fit;
 
 
 %% PLOTTING
+f=FrequencyHz;
+
+GAfit =DNA(1)+(DNA(2).*(1i.*2*pi*f).^(DNA(3))+(DNA(4)+(DNA(5).*(1i.*2*pi*f).^0.5).^(-1).*coth(DNA(6).*(1i*2*pi*f).^0.5)+ (DNA(7).*(1i.*2*pi*f).^DNA(8)+(DNA(9)+(DNA(10).*(1i.*2*pi*f).^DNA(11)).^(-1)).^(-1)).^(-1)).^(-1)).^(-1);...
+ 
 
 
 figure()
@@ -62,13 +66,17 @@ legend('real fit','imaginary fit', 'real data', 'imag data')
 
 figure()
 hold on
-plot(FitData(:,1), -FitData(:,2), 'ob')
+plot(FitData(:,1), -FitData(:,2), 'ob',real(GAfit),-imag(GAfit))
 plot(TraceRs, -TraceXs, 'x');
 xlabel('Zreal');
 ylabel('Zimag');
 title('Nyquist Plot');
 legend('Fitted')
 
-legend('Fitted', 'Experimental')
+legend('Fitted', 'GA fit', 'Experimental')
+
+
+
+
 
 end

@@ -13,13 +13,13 @@ y_cell = {Z_exp_real, Z_exp_imag};
 datafull=Z_exp_real+1i*Z_exp_imag;
 
 
-syms f
+%syms f
 
-%f=fdata;
+f=fdata;
 b = sym('b', [1 11]);
 
 Xin =b(1)+(b(2).*(1i.*2*pi*f).^(b(3))+(b(4)+(b(5).*(1i.*2*pi*f).^0.5).^(-1).*coth(b(6).*(1i*2*pi*f).^0.5)...
-    + (b(7).*(1i.*2*pi*f).^b(8)+(b(9)+(b(10).*(1i.*2*pi*f).^b(11)).^(-1)).^(-1)).^(-1)).^(-1)).^(-1);...
+    + (b(7).*(1i.*2*pi*f).^b(8)+(b(9)+(b(10).*(1i.*2*pi*f).^b(11)).^(-1)).^(-1)).^(-1)).^(-1)).^(-1)-datafull;...
     
 Zfreal = real(Xin);
 Zfimag = imag(Xin);
@@ -43,11 +43,11 @@ mdlimag = @(b,f) ZIfcn(b(1), b(2), b(3), b(4), b(5), b(6), b(7), b(8), b(9), b(1
 mdl_cell = {mdlreal, mdlimag};
 
 
-%[beta1,resnorm] = lsqnonlin(mdlfull,beta0,fdata, y_cell, lb,ub)%optimoptions(@lsqnonlin,'Algorithm','levenberg-marquardt', ... 
- %   'MaxFunctionEvaluations',50000, 'MaxIterations',50000,'DiffMinChange', 1e-6 ,'FunctionTolerance',1e-10, ...
-  %  'StepTolerance',1e-10 ,'ScaleProblem', 'jacobian', 'FiniteDifferenceType', 'central'));
+[beta1,resnorm] = lsqnonlin(mdlfull,beta0,fdata, y_cell, lb,ub,optimoptions(@lsqnonlin,'Algorithm','levenberg-marquardt', ... 
+    'MaxFunctionEvaluations',50000, 'MaxIterations',50000,'DiffMinChange', 1e-6 ,'FunctionTolerance',1e-10, ...
+    'StepTolerance',1e-10 ,'ScaleProblem', 'jacobian', 'FiniteDifferenceType', 'central'));
 
-[beta1,resnorm] = lsqdualfit(x_cell, y_cell, mdl_cell, beta0,lb,ub);
+%[beta1,resnorm] = lsqdualfit(x_cell, y_cell, mdl_cell, beta0,lb,ub);
 
 beta=beta1;
 

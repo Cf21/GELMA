@@ -17,38 +17,37 @@ function [FitData,paramfull,Final,Res] = CNLS_fit(FrequencyHz,TraceRs,TraceXs, p
 % Final = The successful param only
 % Res = the final resual
 
-FrequencyHz=2*pi*FrequencyHz;
+%FrequencyHz=2*pi*FrequencyHz;
 %
-resb=1e10;% The minimum residual before saving a value, 
+%resb=1e10;% The minimum residual before saving a value, 
 
 %FrequencyHz=0.5*logspace(6,1,500);
 
-if RandSeed=="Y"
-    iter = 5;
-    iter2 = 5;
-else 
-    iter = 1;
-    iter2 = 1;
-end
+% if RandSeed=="Y"
+%     iter = 5;
+%     iter2 = 5;
+% else 
+%     iter = 1;
+%     iter2 = 1;
+% end
 
 
 %beta0 = param;% [Rs(i),Qb(i),alpha_b(i),R_bulk(i),Qw(i),B(i),Qh(i),alpha_h(i),Rint(i),Qa(i),alpha_a(i)];
-lb = [param(1)*0.8,param(2)*0.1,0,param(4)*0.8,param(5)*0.1,param(6)*0.1,param(7)*0.1,0,param(9),param(10)*0.1,0];
-ub = [param(1)*1.2,param(2)*10,1,param(4)*1.2,param(5)*10,param(6)*10,param(7)*10,1,param(9),param(10)*10,1];
+lb = [param(1)*0.5,param(2)*0.001,0,param(4)*0.5,param(5)*0.001,param(6)*0.001,param(7)*0.001,0,param(9)*0.001,param(10)*0.001,0];
+ub = [param(1)*1.5,param(2)*1000,1,param(4)*1.5,param(5)*1000,param(6)*1000,param(7)*1000,1,param(9)*1000,param(10)*1000,1];
 
-[Final,res] = nlincompfit(TraceRs,TraceXs,FrequencyHz,param,lb,ub);
+[Final,Res] = nlincompfit(TraceRs,TraceXs,FrequencyHz,param,lb,ub);
 
 
 paramfull(1:11) = Final;
-paramfull(12)=res;
+%paramfull(12)=Res;
 f=FrequencyHz;
-Xfit =param(1)+(param(2).*(1i.*f).^(param(3))+(param(4)+(param(5).*(1i.*f).^0.5).^(-1).*coth(param(6).*(1i*f).^0.5)+ (param(7).*(1i.*f).^param(8)+(param(9)+(param(10).*(1i.*f).^param(11)).^(-1)).^(-1)).^(-1)).^(-1)).^(-1);...
+Xfit =param(1)+(param(2).*(1i.*2*pi*f).^(param(3))+(param(4)+(param(5).*(1i.*2*pi*f).^0.5).^(-1).*coth(param(6).*(1i*2*pi*f).^0.5)+ (param(7).*(1i.*2*pi*f).^param(8)+(param(9)+(param(10).*(1i.*2*pi*f).^param(11)).^(-1)).^(-1)).^(-1)).^(-1)).^(-1);...
   
 %% OUTPUTS
 
 FitData(:,1) = real(Xfit);FitData(:,2) = imag(Xfit);FitData(:,3) = f;
 %Final = param(:);
-Res = resb;
 %Test
 
  %smaller number 
