@@ -73,7 +73,7 @@ function [beta,resnorm] = lsqdualfit(x_cell, y_cell, mdl_cell, beta0, lb,ub, var
 %%,lb,ub
 
 [beta,resnorm] = lsqcurvefit(mdl_vec,beta0,x_vec, y_vec,lb,ub,optimoptions(@lsqnonlin,'Algorithm','trust-region-reflective', ... 
-    'MaxFunctionEvaluations',100000,...%'SubproblemAlgorithm','cg','ScaleProblem', 'jacobian',...
-    'MaxIterations',100000,'DiffMinChange', 1e-4 ,'FunctionTolerance',1e-10,'StepTolerance',1e-10, 'FiniteDifferenceType', 'central'));
+    'MaxFunctionEvaluations',50000,...%'SubproblemAlgorithm','cg','ScaleProblem', 'jacobian',...
+    'MaxIterations',50000,'DiffMinChange', 1e-4 ,'FunctionTolerance',1e-10,'StepTolerance',1e-10, 'FiniteDifferenceType', 'central'));
 
 end
