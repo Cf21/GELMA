@@ -35,4 +35,6 @@ ExpData(:,3) = TraceXs;
 GAparam = [fit_thresh, max_gen];
 LMAparam = [RandSeed,Stages];
 
+
+
 [paramfull,FitData,Final,DNA,Res,ResGA,L,U] = gelmafit(ExpData,beta0,GAparam,LMAparam,seed);
