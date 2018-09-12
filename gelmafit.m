@@ -1,4 +1,4 @@
-function [paramfull,FitData,Final,DNA,Res,ResGA,L,U] = gelmafit(ExpData,beta0,GAparam,LMAparam,seed)
+function [paramfull,FitData,Final,DNA,Res,ResGA,L,U,fit_hist] = gelmafit(ExpData,beta0,GAparam,LMAparam,seed)
 %% INPUTS
 % ExpData = [Frequency, Real, Imaginary]
 % beta0 = Initialization function
@@ -28,6 +28,7 @@ U = [20,1e-6,1.0,1e3,1e-3,1e00,1e-4,1.0,1e5,1e-2,1.0];
 % max_gen = 500;
 fit_thresh = GAparam(1);
 max_gen = GAparam(2);
+plot_freq = 100;
 
 % %LMA params
 RandSeed = "N"; %Random seeding, N for no, Y for yes
@@ -38,8 +39,7 @@ Stages = 3; % number of 3-stage iterations
 
 
 %% Phase 1: Genetic Algorithm Fit 
-[DNA,raw_fit] = EIS_curvefit(FrequencyHz,TraceRs,TraceXs,L,U,fit_thresh,max_gen,seed);
-
+[DNA,raw_fit,fit_hist] = EIS_curvefit(FrequencyHz,TraceRs,TraceXs,L,U,fit_thresh,max_gen,seed,plot_freq);
 
 ResGA = 1/raw_fit;
 

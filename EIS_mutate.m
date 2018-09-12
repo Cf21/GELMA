@@ -10,7 +10,7 @@ for i =1:11
         if dice == 0
             child(i)= (bounds(2,i)-bounds(1,i))*rand() + bounds(1,i); % randomly select new value within parameter bounds
         else
-            child(i) = child(i)*normrnd(1,0.2); % increase / decrease based on normal distribution around current value
+            child(i) = child(i)*normrnd(1,0.1); % increase / decrease based on normal distribution around current value
         end
     end
     

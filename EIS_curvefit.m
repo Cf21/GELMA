@@ -1,4 +1,4 @@
-function [DNA,rawfit] = EIS_curvefit(f,TraceRs,TraceXs,L,U,fit_thresh,max_gen,seed)
+function [DNA,rawfit,fit_hist] = EIS_curvefit(f,TraceRs,TraceXs,L,U,fit_thresh,max_gen,seed,plot_freq)
 
 %% GA PARAMETERS (can be modified)
 
@@ -6,6 +6,7 @@ pop_size = 1000;
 mutn_rate = 0.09;
 keep_top_percent = 5;
 n = 4;
+%plot_freq = 100;
 
 %% PARAMETER BOUNDS
 % Bounds = [ L1  L2  L3 ...  L11 ]
@@ -17,12 +18,13 @@ bounds = [L; U];
 
 %% Genetic Algorithm
 
-% Initialize bext fit DNA vector
+% Initialize best fit DNA vector and fitness history
 DNA = zeros(1,11);
+fit_hist = zeros(ceil(max_gen/plot_freq),3);
 
 % Set-up progress plot of GA
 figure()
-set(gcf,'Position',[500 500 1000 500])
+set(gcf,'Position',[200 200 1000 500])
 hold on
 grid on
 ylim([0 inf])
@@ -66,18 +68,18 @@ while true
     % Evaluate fitness
     [fitness,avg_fitness] = EIS_eval_fitness(pop,pop_size,f,TraceRs,TraceXs);
     
-    % Sort by fitness score (best fitness to worst)
+    % Sort by fitness score (best fitness to worst) and record history
     pop = cat(2,pop,fitness);
     pop = sortrows(pop,12,'descend');
     fitness = pop(:,12);
     pop(:,12) = [];
     
-    % Display avg/max fitness once every 100 generations
-    if mod(gen,100) == 0
-        %figure(1)
+    % Display and record avg/max fitness once every 100 generations
+    if mod(gen,plot_freq) == 0
         plot(gen,avg_fitness,'b.','MarkerSize',10)
         plot(gen,fitness(1),'r.','MarkerSize',10)
         drawnow()
+        fit_hist(gen/plot_freq,:) = [gen fitness(1) avg_fitness];
     end
     
     % If max generations exceeded or fitness threshold reached, stop
