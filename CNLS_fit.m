@@ -33,12 +33,12 @@ function [FitData,paramfull,Final,Res] = CNLS_fit(FrequencyHz,TraceRs,TraceXs, p
 
 
 %beta0 = param;% [Rs(i),Qb(i),alpha_b(i),R_bulk(i),Qw(i),B(i),Qh(i),alpha_h(i),Rint(i),Qa(i),alpha_a(i)];
-lb = [param(1)*0.5,param(2)*0.001,0,param(4)*0.5,param(5)*0.001,param(6)*0.001,param(7)*0.001,0,param(9)*0.001,param(10)*0.001,0];
-ub = [param(1)*1.5,param(2)*1000,1,param(4)*1.5,param(5)*1000,param(6)*1000,param(7)*1000,1,param(9)*1000,param(10)*1000,1];
+lb = [param(1)*0.5,param(2)*0.0001,0,param(4)*0.5,param(5)*0.0001,param(6)*0.0001,param(7)*0.0001,0,param(9)*0.0001,param(10)*0.0001,0];
+ub = [param(1)*1.5,param(2)*10000,1,param(4)*1.5,param(5)*10000,param(6)*10000,param(7)*10000,1,param(9)*10000,param(10)*10000,1];
 
 [Final,Res] = nlincompfit(TraceRs,TraceXs,FrequencyHz,param,lb,ub);
 
-
+param=Final;
 paramfull(1:11) = Final;
 %paramfull(12)=Res;
 f=FrequencyHz;
